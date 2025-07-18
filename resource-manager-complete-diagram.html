@@ -174,23 +174,23 @@
             <h3>🔄 All System Workflows</h3>
             <div class="workflow">
                 <h4>1. View Resources Flow</h4>
-                <p>User accesses dashboard → GET /servers API call → Backend reads JSON → Returns formatted data → UI displays server list with real-time resource status</p>
+                <p>User accesses Dashboard → GET /servers API call → Backend reads JSON database → Returns formatted server data → UI displays real-time resource status and availability</p>
             </div>
             <div class="workflow">
                 <h4>2. Create Pod Flow</h4>
-                <p>User fills form → Input validation → POST /create → Backend validates resources → Updates JSON database → Deploys to Kubernetes → Returns success response</p>
+                <p>User fills creation form → Frontend validates input → POST /create → Backend validates resources → Updates JSON database → Deploys to Kubernetes → Returns success response → UI refreshes dashboard</p>
             </div>
             <div class="workflow">
                 <h4>3. Update Pod Flow</h4>
-                <p>User opens edit dialog → Modifies settings → POST /update → Backend validates changes → Updates resource allocations → Syncs with Kubernetes → Refreshes UI</p>
+                <p>User opens edit dialog → Modifies pod settings → POST /update → Backend validates changes → Updates resource allocations → Syncs with Kubernetes → Refreshes UI display</p>
             </div>
             <div class="workflow">
                 <h4>4. Delete Pod Flow</h4>
-                <p>User confirms deletion → POST /delete → Backend removes from JSON → Deletes from Kubernetes → Frees allocated resources → Updates UI display</p>
+                <p>User confirms deletion → POST /delete → Backend removes from JSON database → Deletes from Kubernetes cluster → Frees allocated resources → Updates UI dashboard</p>
             </div>
             <div class="workflow">
                 <h4>5. Consistency Check Flow</h4>
-                <p>System/User triggers check → GET /consistency-check → Backend validates JSON vs Kubernetes → Checks resource integrity → Reports status → Auto-fixes issues</p>
+                <p>System/User triggers check → GET /consistency-check → Backend validates JSON vs Kubernetes → Checks resource integrity → Reports status → Auto-fixes detected issues</p>
             </div>
         </div>
         

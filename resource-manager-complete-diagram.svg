@@ -123,27 +123,27 @@
   <text x="1175" y="610" class="small-text">Usage Metrics • Health Checks</text>
   
   <!-- Complete Workflow Examples -->
-  <rect x="50" y="660" width="1300" height="220" class="workflow-box" rx="10"/>
+  <rect x="50" y="660" width="1300" height="240" class="workflow-box" rx="10"/>
   <text x="700" y="685" class="layer-title" fill="#333">COMPLETE SYSTEM WORKFLOWS</text>
   
   <!-- Workflow 1: View Resources -->
   <text x="70" y="710" class="title" style="text-anchor: start; fill: #1976d2;">1. View Resources Flow:</text>
-  <text x="70" y="725" class="workflow-text">User → Dashboard → GET /servers → Backend → Read mock_db.json → Format Response → Display Server List</text>
+  <text x="70" y="725" class="workflow-text">User accesses Dashboard → GET /servers API call → Backend reads JSON database → Returns formatted server data → UI displays real-time resource status</text>
   
   <!-- Workflow 2: Create Pod -->
   <text x="70" y="750" class="title" style="text-anchor: start; fill: #f57c00;">2. Create Pod Flow:</text>
-  <text x="70" y="765" class="workflow-text">User → Create Form → Validate Input → POST /create → Backend → Check Resources → Update JSON → Deploy K8s → Success Response</text>
+  <text x="70" y="765" class="workflow-text">User fills creation form → Frontend validates input → POST /create → Backend validates resources → Updates JSON database → Deploys to Kubernetes → Returns success response → UI refreshes</text>
   
   <!-- Workflow 3: Update Pod -->
   <text x="70" y="790" class="title" style="text-anchor: start; fill: #7b1fa2;">3. Update Pod Flow:</text>
-  <text x="70" y="805" class="workflow-text">User → Edit Dialog → POST /update → Backend → Validate Changes → Update Allocations → Sync K8s → Refresh UI</text>
+  <text x="70" y="805" class="workflow-text">User opens edit dialog → Modifies pod settings → POST /update → Backend validates changes → Updates resource allocations → Syncs with Kubernetes → Refreshes UI display</text>
   
   <!-- Workflow 4: Delete Pod -->
   <text x="70" y="830" class="title" style="text-anchor: start; fill: #d32f2f;">4. Delete Pod Flow:</text>
-  <text x="70" y="845" class="workflow-text">User → Confirm Deletion → POST /delete → Backend → Remove from JSON → Delete from K8s → Free Resources → Update UI</text>
+  <text x="70" y="845" class="workflow-text">User confirms deletion → POST /delete → Backend removes from JSON database → Deletes from Kubernetes cluster → Frees allocated resources → Updates UI dashboard</text>
   
   <!-- Workflow 5: Consistency Check -->
   <text x="70" y="870" class="title" style="text-anchor: start; fill: #388e3c;">5. Consistency Check Flow:</text>
-  <text x="70" y="885" class="workflow-text">System/User → GET /consistency-check → Backend → Validate JSON vs K8s → Check Resource Integrity → Report Status → Auto-fix Issues</text>
+  <text x="70" y="885" class="workflow-text">System/User triggers check → GET /consistency-check → Backend validates JSON vs Kubernetes → Checks resource integrity → Reports status → Auto-fixes detected issues</text>
   
 </svg>
