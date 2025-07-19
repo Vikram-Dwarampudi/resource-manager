@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernetes-resource-manager-backend
+  labels:
+    app: kubernetes-resource-manager-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubernetes-resource-manager-backend
+  template:
+    metadata:
+      labels:
+        app: kubernetes-resource-manager-backend
+    spec:
+      containers:
+      - name: backend
+        image: kubernetes-resource-manager-backend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /servers
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /servers
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        env:
+        - name: FLASK_ENV
+          value: "production" 
