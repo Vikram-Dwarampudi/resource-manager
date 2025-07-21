@@ -1,0 +1,186 @@
+================================================================================
+                    KUBERNETES RESOURCE MANAGER - COMMAND REFERENCE
+================================================================================
+
+📋 CURRENT STATUS:
+✅ Minikube: Running
+✅ Pod: kubernetes-resource-manager-backend-76d479b5d9-d869z (Running)
+✅ Service: kubernetes-resource-manager-backend-service (NodePort)
+✅ Port Forwarding: Active (127.0.0.1:5000 -> 5000)
+✅ Angular Frontend: Running on http://localhost:4201
+
+================================================================================
+🔍 KUBERNETES STATUS & INFORMATION COMMANDS
+================================================================================
+
+1. CHECK POD STATUS:
+   kubectl get pods
+   kubectl describe pod kubernetes-resource-manager-backend-76d479b5d9-d869z
+   kubectl get pods -w
+   kubectl get pods -o wide
+
+2. CHECK SERVICE STATUS:
+   kubectl get services
+   kubectl describe service kubernetes-resource-manager-backend-service
+   kubectl get endpoints kubernetes-resource-manager-backend-service
+
+3. GET MINIKUBE INFORMATION:
+   minikube ip
+   minikube status
+   minikube dashboard --url
+
+================================================================================
+🌐 ENDPOINT URL COMMANDS
+================================================================================
+
+4. GET SERVICE URLS:
+   minikube service kubernetes-resource-manager-backend-service
+   minikube service kubernetes-resource-manager-backend-service --url
+   minikube service list
+
+5. PORT FORWARDING (RECOMMENDED):
+   kubectl port-forward service/kubernetes-resource-manager-backend-service 5000:5000
+   kubectl port-forward service/kubernetes-resource-manager-backend-service 8080:5000
+
+================================================================================
+🧪 TESTING COMMANDS
+================================================================================
+
+6. TEST API ENDPOINTS:
+   # Test servers endpoint (using port-forwarding)
+   curl -s http://127.0.0.1:5000/servers | jq '.[0].name'
+   
+   # Test consistency check
+   curl -s http://127.0.0.1:5000/consistency-check | jq '.message'
+   
+   # Test with verbose output
+   curl -v http://127.0.0.1:5000/servers
+   
+   # Test direct Kubernetes IP (may not work due to networking)
+   curl -s http://192.168.67.2:30000/servers
+
+7. CHECK APPLICATION LOGS:
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --tail=10
+   kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --timestamps
+
+================================================================================
+🚀 QUICK TEST COMMANDS
+================================================================================
+
+8. START PORT-FORWARDING (BACKGROUND):
+   kubectl port-forward service/kubernetes-resource-manager-backend-service 5000:5000 &
+
+9. TEST CONNECTION:
+   curl -s http://127.0.0.1:5000/servers | jq 'length'
+   curl -s http://127.0.0.1:5000/consistency-check | jq '.status'
+
+10. OPEN SWAGGER DOCS:
+    open http://127.0.0.1:5000/apidocs/
+
+================================================================================
+🔧 TROUBLESHOOTING COMMANDS
+================================================================================
+
+11. CHECK IF POD IS READY:
+    kubectl get pods -o wide
+
+12. CHECK SERVICE ENDPOINTS:
+    kubectl get endpoints
+
+13. CHECK EVENTS:
+    kubectl get events --sort-by='.lastTimestamp'
+
+14. RESTART DEPLOYMENT:
+    kubectl rollout restart deployment kubernetes-resource-manager-backend
+
+15. CHECK POD RESOURCES:
+    kubectl top pods
+    kubectl describe pod kubernetes-resource-manager-backend-76d479b5d9-d869z
+
+================================================================================
+📊 CURRENT ENDPOINTS
+================================================================================
+
+✅ WORKING ENDPOINTS:
+- Port Forwarding: http://127.0.0.1:5000
+- Minikube IP: http://192.168.67.2:30000 (may have connectivity issues)
+- Service: kubernetes-resource-manager-backend-service
+
+✅ AVAILABLE APIs:
+- GET /servers - List servers and pods
+- GET /consistency-check - Data consistency check
+- POST /create - Create new pod
+- POST /delete - Delete pod
+- POST /update - Update pod
+- GET /apidocs - Swagger documentation
+
+================================================================================
+🎯 STEP-BY-STEP TESTING PROCEDURE
+================================================================================
+
+STEP 1: Check Kubernetes Status
+   kubectl get pods
+   kubectl get services
+   minikube status
+
+STEP 2: Start Port Forwarding
+   kubectl port-forward service/kubernetes-resource-manager-backend-service 5000:5000
+
+STEP 3: Test API Endpoints
+   curl -s http://127.0.0.1:5000/servers | jq 'length'
+   curl -s http://127.0.0.1:5000/consistency-check | jq '.status'
+
+STEP 4: Start Angular Frontend
+   cd frontend && npm start -- --port 4201
+
+STEP 5: Access Application
+   Frontend: http://localhost:4201
+   Backend API: http://127.0.0.1:5000
+   Swagger Docs: http://127.0.0.1:5000/apidocs/
+
+================================================================================
+📝 USEFUL ALIASES (add to ~/.bashrc or ~/.zshrc)
+================================================================================
+
+alias kpods='kubectl get pods'
+alias ksvc='kubectl get services'
+alias klogs='kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z'
+alias kpf='kubectl port-forward service/kubernetes-resource-manager-backend-service 5000:5000'
+alias ktest='curl -s http://127.0.0.1:5000/servers | jq "length"'
+
+================================================================================
+🔗 USEFUL LINKS
+================================================================================
+
+- Angular App: http://localhost:4201
+- Backend API: http://127.0.0.1:5000
+- Swagger Docs: http://127.0.0.1:5000/apidocs/
+- Minikube Dashboard: minikube dashboard
+- Test Page: test-connection.html
+
+================================================================================
+⚠️  TROUBLESHOOTING TIPS
+================================================================================
+
+1. If port-forwarding fails:
+   - Kill existing port-forward: pkill -f "kubectl port-forward"
+   - Restart: kubectl port-forward service/kubernetes-resource-manager-backend-service 5000:5000
+
+2. If pod is not ready:
+   - Check logs: kubectl logs <pod-name>
+   - Check events: kubectl get events
+   - Restart deployment: kubectl rollout restart deployment kubernetes-resource-manager-backend
+
+3. If service is not accessible:
+   - Check service endpoints: kubectl get endpoints
+   - Verify service configuration: kubectl describe service kubernetes-resource-manager-backend-service
+
+4. If Angular can't connect:
+   - Verify port-forwarding is running
+   - Check browser console for CORS errors
+   - Ensure config.ts has correct API URL
+
+================================================================================
+📅 LAST UPDATED: July 19, 2025
+================================================================================ 

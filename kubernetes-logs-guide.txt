@@ -1,0 +1,211 @@
+================================================================================
+                    KUBERNETES LOGS MONITORING GUIDE
+================================================================================
+
+📋 WHERE TO CHECK LOGS FOR APPLICATION CHANGES (UPDATE/DELETE/CREATE)
+
+================================================================================
+🔍 APPLICATION LOGS (Flask Backend)
+================================================================================
+
+1. REAL-TIME LOG MONITORING:
+   # Watch logs in real-time (follow mode)
+   kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z
+   
+   # Watch logs with timestamps
+   kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z --timestamps
+   
+   # Watch logs for last 50 lines
+   kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z --tail=50
+
+2. HISTORICAL LOGS:
+   # Get last 20 log entries
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --tail=20
+   
+   # Get last 100 log entries
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --tail=100
+   
+   # Get all logs since a specific time
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --since=1h
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --since=30m
+
+3. LOG FILTERING:
+   # Filter logs for specific HTTP methods (POST = create/update/delete)
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "POST"
+   
+   # Filter for specific endpoints
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "/create"
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "/delete"
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "/update"
+   
+   # Filter for errors
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "ERROR"
+   kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "500"
+
+================================================================================
+📊 KUBERNETES SYSTEM LOGS
+================================================================================
+
+4. POD EVENTS:
+   # Check pod events for issues
+   kubectl get events --sort-by='.lastTimestamp'
+   
+   # Filter events for your pod
+   kubectl get events --field-selector involvedObject.name=kubernetes-resource-manager-backend-76d479b5d9-d869z
+   
+   # Check events in a specific namespace
+   kubectl get events -n default --sort-by='.lastTimestamp'
+
+5. DEPLOYMENT EVENTS:
+   # Check deployment events
+   kubectl describe deployment kubernetes-resource-manager-backend
+   
+   # Check deployment rollout status
+   kubectl rollout status deployment kubernetes-resource-manager-backend
+   
+   # Check deployment history
+   kubectl rollout history deployment kubernetes-resource-manager-backend
+
+6. SERVICE EVENTS:
+   # Check service events
+   kubectl describe service kubernetes-resource-manager-backend-service
+   
+   # Check service endpoints
+   kubectl get endpoints kubernetes-resource-manager-backend-service
+
+================================================================================
+🎯 SPECIFIC LOG COMMANDS FOR YOUR APP
+================================================================================
+
+7. MONITOR CREATE OPERATIONS:
+   # Watch for pod creation requests
+   kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "POST /create"
+   
+   # Example output you'll see:
+   # 127.0.0.1 - - [19/Jul/2025 16:05:30] "POST /create HTTP/1.1" 200 -
+
+8. MONITOR DELETE OPERATIONS:
+   # Watch for pod deletion requests
+   kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "POST /delete"
+   
+   # Example output you'll see:
+   # 127.0.0.1 - - [19/Jul/2025 16:06:15] "POST /delete HTTP/1.1" 200 -
+
+9. MONITOR UPDATE OPERATIONS:
+   # Watch for pod update requests
+   kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "POST /update"
+   
+   # Example output you'll see:
+   # 127.0.0.1 - - [19/Jul/2025 16:07:20] "POST /update HTTP/1.1" 200 -
+
+10. MONITOR ERRORS:
+    # Watch for 4xx and 5xx errors
+    kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z | grep -E "(4[0-9]{2}|5[0-9]{2})"
+    
+    # Watch for specific error patterns
+    kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z | grep -i "error"
+
+================================================================================
+🔧 ADVANCED LOG MONITORING
+================================================================================
+
+11. MULTI-POD LOGGING (if you have multiple replicas):
+    # Get logs from all pods in deployment
+    kubectl logs -l app=kubernetes-resource-manager-backend
+    
+    # Follow logs from all pods
+    kubectl logs -f -l app=kubernetes-resource-manager-backend
+
+12. LOG EXPORT:
+    # Save logs to file
+    kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z > app-logs.txt
+    
+    # Save logs with timestamps
+    kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --timestamps > app-logs-with-time.txt
+    
+    # Save only POST requests (create/update/delete)
+    kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "POST" > post-requests.txt
+
+13. LOG ANALYSIS:
+    # Count total requests
+    kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | wc -l
+    
+    # Count POST requests
+    kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "POST" | wc -l
+    
+    # Count errors
+    kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep -E "(4[0-9]{2}|5[0-9]{2})" | wc -l
+
+================================================================================
+📱 USEFUL ALIASES FOR LOG MONITORING
+================================================================================
+
+# Add these to your ~/.bashrc or ~/.zshrc:
+
+alias klogs='kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z'
+alias klogsf='kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z'
+alias klogs20='kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --tail=20'
+alias klogs100='kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z --tail=100'
+alias klogspost='kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep "POST"'
+alias klogserror='kubectl logs kubernetes-resource-manager-backend-76d479b5d9-d869z | grep -E "(4[0-9]{2}|5[0-9]{2})"'
+alias kevents='kubectl get events --sort-by=".lastTimestamp"'
+
+================================================================================
+🎯 QUICK LOG MONITORING WORKFLOW
+================================================================================
+
+STEP 1: Start real-time monitoring
+   kubectl logs -f kubernetes-resource-manager-backend-76d479b5d9-d869z
+
+STEP 2: Perform your action (create/update/delete) in Angular app
+
+STEP 3: Watch the logs for:
+   - POST requests to /create, /update, /delete
+   - HTTP status codes (200 = success, 4xx/5xx = errors)
+   - Timestamps of operations
+
+STEP 4: If errors occur, check:
+   - Pod events: kubectl get events
+   - Pod status: kubectl describe pod <pod-name>
+   - Service status: kubectl describe service <service-name>
+
+================================================================================
+📊 LOG OUTPUT EXAMPLES
+================================================================================
+
+✅ SUCCESSFUL OPERATIONS:
+127.0.0.1 - - [19/Jul/2025 16:10:30] "POST /create HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jul/2025 16:11:15] "POST /delete HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jul/2025 16:12:20] "POST /update HTTP/1.1" 200 -
+
+❌ ERROR OPERATIONS:
+127.0.0.1 - - [19/Jul/2025 16:13:30] "POST /create HTTP/1.1" 400 -
+127.0.0.1 - - [19/Jul/2025 16:14:15] "POST /delete HTTP/1.1" 404 -
+127.0.0.1 - - [19/Jul/2025 16:15:20] "POST /update HTTP/1.1" 500 -
+
+📈 HEALTH CHECKS:
+10.244.0.1 - - [19/Jul/2025 16:16:30] "GET /servers HTTP/1.1" 200 -
+127.0.0.1 - - [19/Jul/2025 16:17:15] "GET /consistency-check HTTP/1.1" 200 -
+
+================================================================================
+⚠️  TROUBLESHOOTING LOG ISSUES
+================================================================================
+
+1. If logs are not showing:
+   - Check if pod is running: kubectl get pods
+   - Check pod status: kubectl describe pod <pod-name>
+   - Restart pod: kubectl delete pod <pod-name>
+
+2. If logs are empty:
+   - Check if application is running inside pod
+   - Check pod logs: kubectl logs <pod-name> --previous
+   - Check pod events: kubectl get events
+
+3. If logs are truncated:
+   - Use --tail=1000 for more lines
+   - Use --since=1h for recent logs
+   - Export logs to file for analysis
+
+================================================================================
+📅 LAST UPDATED: July 19, 2025
+================================================================================ 
