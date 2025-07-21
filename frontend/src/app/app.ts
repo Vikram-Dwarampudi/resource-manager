@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from './config';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -86,7 +87,7 @@ export class App {
   }
 
   checkConsistency() {
-    this.http.get<any>('http://127.0.0.1:5000/consistency-check').subscribe({
+    this.http.get<any>(`${environment.apiUrl}/consistency-check`).subscribe({
       next: (res) => {
         this.consistencyMessage = res.message;
       },
@@ -97,7 +98,7 @@ export class App {
   }
 
   fetchServers() {
-    this.http.get<any[]>('http://127.0.0.1:5000/servers').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/servers`).subscribe({
       next: (data) => {
         this.servers = data;
         if (this.servers.length > 0 && !this.selectedServer) {
@@ -120,7 +121,7 @@ export class App {
       username: this.newPod.username,
       password: this.newPod.password
     };
-    this.http.post('http://127.0.0.1:5000/delete', payload).subscribe({
+    this.http.post(`${environment.apiUrl}/delete`, payload).subscribe({
       next: () => {
         this.showAlert(
           'success',
@@ -152,7 +153,7 @@ export class App {
       password: this.newPod.password,
       Owner: this.newPod.username
     };
-    this.http.post('http://127.0.0.1:5000/create', payload).subscribe({
+    this.http.post(`${environment.apiUrl}/create`, payload).subscribe({
       next: () => {
         this.message = `Pod ${this.newPod.PodName} created.`;
         this.fetchServers();
@@ -199,7 +200,7 @@ export class App {
 
   deployPod(podData: any, serverId: string) {
     const payload = { ...podData, ServerName: serverId };
-    this.http.post('http://127.0.0.1:5000/create', payload).subscribe({
+    this.http.post(`${environment.apiUrl}/create`, payload).subscribe({
       next: () => {
         this.showAlert(
           'success',
@@ -267,7 +268,7 @@ export class App {
       Owner: pod.owner
     };
 
-    this.http.post('http://127.0.0.1:5000/update', payload).subscribe({
+    this.http.post(`${environment.apiUrl}/update`, payload).subscribe({
       next: () => {
         this.showAlert(
           'success',
