@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .box { fill: #e8f4fd; stroke: #1976d2; stroke-width: 2; }
+      .api-box { fill: #fff3e0; stroke: #f57c00; stroke-width: 2; }
+      .data-box { fill: #f3e5f5; stroke: #7b1fa2; stroke-width: 2; }
+      .k8s-box { fill: #e8f5e8; stroke: #388e3c; stroke-width: 2; }
+      .workflow-box { fill: #fafafa; stroke: #666; stroke-width: 1; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; }
+      .title { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .layer-title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .arrow { stroke: #333; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .workflow-text { font-family: Arial, sans-serif; font-size: 10px; fill: #666; text-anchor: start; }
+    </style>
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+      </marker>
+    </defs>
+  </defs>
+  
+  <!-- Title -->
+  <text x="700" y="30" class="layer-title" style="font-size: 20px; fill: #1976d2;">Resource Manager - Clean System Architecture</text>
+  
+  <!-- User Interface Layer -->
+  <rect x="50" y="60" width="1300" height="60" class="box" rx="10"/>
+  <text x="700" y="95" class="layer-title" fill="#1976d2">USER INTERFACE LAYER</text>
+  
+  <!-- Arrow from UI to Backend -->
+  <line x1="700" y1="120" x2="700" y2="140" class="arrow"/>
+  
+  <!-- Backend API Layer -->
+  <rect x="50" y="150" width="1300" height="100" class="api-box" rx="10"/>
+  <text x="700" y="175" class="layer-title" fill="#f57c00">BACKEND API LAYER</text>
+  
+  <!-- API Endpoints - Clean titles only -->
+  <rect x="80" y="190" width="200" height="40" class="box" rx="5"/>
+  <text x="180" y="215" class="title">GET /servers</text>
+  
+  <rect x="300" y="190" width="200" height="40" class="box" rx="5"/>
+  <text x="400" y="215" class="title">POST /create</text>
+  
+  <rect x="520" y="190" width="200" height="40" class="box" rx="5"/>
+  <text x="620" y="215" class="title">POST /update</text>
+  
+  <rect x="740" y="190" width="200" height="40" class="box" rx="5"/>
+  <text x="840" y="215" class="title">POST /delete</text>
+  
+  <rect x="960" y="190" width="200" height="40" class="box" rx="5"/>
+  <text x="1060" y="215" class="title">GET /consistency-check</text>
+  
+  <!-- Arrow from Backend to Data -->
+  <line x1="700" y1="250" x2="700" y2="270" class="arrow"/>
+  
+  <!-- Data Layer -->
+  <rect x="50" y="280" width="1300" height="100" class="data-box" rx="10"/>
+  <text x="700" y="305" class="layer-title" fill="#7b1fa2">DATA LAYER</text>
+  
+  <!-- Data Components - Clean titles only -->
+  <rect x="150" y="320" width="200" height="40" class="box" rx="5"/>
+  <text x="250" y="345" class="title">Server Information</text>
+  
+  <rect x="400" y="320" width="200" height="40" class="box" rx="5"/>
+  <text x="500" y="345" class="title">Pod Management</text>
+  
+  <rect x="650" y="320" width="200" height="40" class="box" rx="5"/>
+  <text x="750" y="345" class="title">Resource Allocation</text>
+  
+  <rect x="900" y="320" width="200" height="40" class="box" rx="5"/>
+  <text x="1000" y="345" class="title">Consistency Data</text>
+  
+  <!-- Arrow from Data to Kubernetes -->
+  <line x1="700" y1="380" x2="700" y2="400" class="arrow"/>
+  
+  <!-- Kubernetes Layer -->
+  <rect x="50" y="410" width="1300" height="100" class="k8s-box" rx="10"/>
+  <text x="700" y="435" class="layer-title" fill="#388e3c">KUBERNETES CLUSTER</text>
+  
+  <!-- Kubernetes Components - Clean titles only -->
+  <rect x="150" y="450" width="200" height="40" class="box" rx="5"/>
+  <text x="250" y="475" class="title">Namespaces</text>
+  
+  <rect x="400" y="450" width="200" height="40" class="box" rx="5"/>
+  <text x="500" y="475" class="title">Pod Status</text>
+  
+  <rect x="650" y="450" width="200" height="40" class="box" rx="5"/>
+  <text x="750" y="475" class="title">Services</text>
+  
+  <rect x="900" y="450" width="200" height="40" class="box" rx="5"/>
+  <text x="1000" y="475" class="title">Resource Monitoring</text>
+  
+  <!-- Clean Workflow Examples -->
+  <rect x="50" y="530" width="1300" height="150" class="workflow-box" rx="10"/>
+  <text x="700" y="555" class="layer-title" fill="#333">SYSTEM WORKFLOWS</text>
+  
+  <!-- Workflow 1: View Resources -->
+  <text x="70" y="580" class="title" style="text-anchor: start; fill: #1976d2;">1. View Resources Flow</text>
+  <text x="70" y="595" class="workflow-text">User → Dashboard → GET /servers → Backend → JSON Database → Display</text>
+  
+  <!-- Workflow 2: Create Pod -->
+  <text x="70" y="615" class="title" style="text-anchor: start; fill: #f57c00;">2. Create Pod Flow</text>
+  <text x="70" y="630" class="workflow-text">User → Create Form → POST /create → Backend → Validate → Update JSON → Deploy K8s</text>
+  
+  <!-- Workflow 3: Update Pod -->
+  <text x="70" y="650" class="title" style="text-anchor: start; fill: #7b1fa2;">3. Update Pod Flow</text>
+  <text x="70" y="665" class="workflow-text">User → Edit Dialog → POST /update → Backend → Update → Sync K8s → Refresh UI</text>
+  
+  <!-- Workflow 4: Delete Pod -->
+  <text x="700" y="580" class="title" style="text-anchor: start; fill: #d32f2f;">4. Delete Pod Flow</text>
+  <text x="700" y="595" class="workflow-text">User → Confirm → POST /delete → Backend → Remove JSON → Delete K8s → Free Resources</text>
+  
+  <!-- Workflow 5: Consistency Check -->
+  <text x="700" y="615" class="title" style="text-anchor: start; fill: #388e3c;">5. Consistency Check Flow</text>
+  <text x="700" y="630" class="workflow-text">System → GET /consistency-check → Backend → Validate → Check Integrity → Report Status</text>
+  
+</svg>
